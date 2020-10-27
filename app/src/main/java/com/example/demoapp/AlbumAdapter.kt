@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
+import com.example.demoapp.base.BaseAdapter
 import com.example.demoapp.models.responses.AlbumsResponse
 import kotlinx.android.synthetic.main.item_album.view.*
 
