@@ -16,7 +16,7 @@ class AlbumAdapter(callback: DiffUtil.ItemCallback<AlbumsResponse.Result> = Albu
         return AlbumViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_album, parent, false))
     }
 
-    inner class AlbumViewHolder(view: View): BaseViewHolder<AlbumsResponse.Result>(view) {
+    class AlbumViewHolder(view: View): BaseViewHolder<AlbumsResponse.Result>(view) {
 
         @SuppressLint("SetTextI18n")
         override fun bindView(pos: Int, item: AlbumsResponse.Result) {

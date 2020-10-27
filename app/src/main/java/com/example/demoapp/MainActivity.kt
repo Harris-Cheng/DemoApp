@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import com.example.demoapp.base.BaseAdapter.Companion.ITEM_CLICK_BASE
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +23,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupUi() {
         adapter = AlbumAdapter()
+
+        adapter.getClickObservable().subscribe {
+            when (it.id) {
+                ITEM_CLICK_BASE -> {
+
+                }
+            }
+        }
+
         recyclerView.adapter = adapter
     }
 
