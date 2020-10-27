@@ -34,6 +34,10 @@ abstract class BaseAdapter<T>(
         holder.bindView(position, getItem(position), payloads)
     }
 
+    public override fun getItem(position: Int): T {
+        return super.getItem(position)
+    }
+
     abstract class BaseViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {
         private lateinit var clickSubject: PublishSubject<ItemClick>
 

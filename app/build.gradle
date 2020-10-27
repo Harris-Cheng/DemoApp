@@ -56,8 +56,9 @@ dependencies {
 
     // moshi
     implementation "com.squareup.retrofit2:converter-moshi:2.3.0"
-    implementation "com.squareup.moshi:moshi:1.6.0"
-    implementation "com.squareup.moshi:moshi-kotlin:1.6.0"
+    implementation "com.squareup.moshi:moshi:1.11.0"
+    implementation "com.squareup.moshi:moshi-kotlin:1.11.0"
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.11.0'
 
     //https://square.github.io/okhttp/
     implementation 'com.squareup.okhttp3:okhttp:3.14.7'
@@ -77,4 +78,6 @@ dependencies {
 
     //https://github.com/JakeWharton/RxBinding
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
+
+    implementation 'com.orhanobut:hawk:2.0.1'
 }

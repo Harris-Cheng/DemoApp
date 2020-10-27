@@ -10,13 +10,13 @@ import com.example.demoapp.base.BaseAdapter
 import com.example.demoapp.models.responses.AlbumsResponse
 import kotlinx.android.synthetic.main.item_album.view.*
 
-class AlbumAdapter(callback: DiffUtil.ItemCallback<AlbumsResponse.Result> = AlbumDiffCallback()): BaseAdapter<AlbumsResponse.Result>(callback) {
+class AlbumAdapter(var bookmarkList: MutableSet<Long>, callback: DiffUtil.ItemCallback<AlbumsResponse.Result> = AlbumDiffCallback()): BaseAdapter<AlbumsResponse.Result>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<AlbumsResponse.Result> {
         return AlbumViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_album, parent, false))
     }
 
-    class AlbumViewHolder(view: View): BaseViewHolder<AlbumsResponse.Result>(view) {
+    inner class AlbumViewHolder(view: View): BaseViewHolder<AlbumsResponse.Result>(view) {
 
         @SuppressLint("SetTextI18n")
         override fun bindView(pos: Int, item: AlbumsResponse.Result) {
@@ -27,6 +27,12 @@ class AlbumAdapter(callback: DiffUtil.ItemCallback<AlbumsResponse.Result> = Albu
             itemView.tvReleaseDate.text = item.releaseDate.orEmpty()
 
             Glide.with(itemView).load(item.artworkUrl100.orEmpty()).into(itemView.ivArtist)
+
+            itemView.cbBookmark.isChecked = bookmarkList.contains(item.collectionId)
+
+            itemView.cbBookmark.setOnClickListener {
+                itemView.performClick()
+            }
         }
     }
 
@@ -35,7 +41,7 @@ class AlbumAdapter(callback: DiffUtil.ItemCallback<AlbumsResponse.Result> = Albu
             oldItem: AlbumsResponse.Result,
             newItem: AlbumsResponse.Result
         ): Boolean {
-            return oldItem.collectionID == newItem.collectionID
+            return oldItem.collectionName == newItem.collectionName
         }
     }
 }

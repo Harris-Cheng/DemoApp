@@ -1,15 +1,19 @@
 package com.example.demoapp.models.responses
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class AlbumsResponse (
     val resultCount: Long = 0,
     val results: List<Result>? = null
 ) {
+    @JsonClass(generateAdapter = true)
     data class Result (
         val wrapperType: String? = null,
         val collectionType: String? = null,
-        val artistID: Long? = null,
-        val collectionID: Long? = null,
-        val amgArtistID: Long? = null,
+        val artistId: Long = 0,
+        val collectionId: Long = 0,
+        val amgArtistId: Long = 0,
         val artistName: String? = null,
         val collectionName: String? = null,
         val collectionCensoredName: String? = null,
