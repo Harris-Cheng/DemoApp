@@ -15,17 +15,22 @@ class MainViewModel : ViewModel() {
         const val BOOKMARK_LIST = "BOOKMARK_LIST"
     }
 
-    private val albumResponseLiveData: MutableLiveData<AlbumsResponse?> by lazy {
-        MutableLiveData()
-    }
+    private val albumResponseLiveData: MutableLiveData<AlbumsResponse?> = MutableLiveData()
 
-    private val bookMarkListLiveData: MutableLiveData<MutableSet<Long>> by lazy {
-        MutableLiveData(Hawk.get(BOOKMARK_LIST, mutableSetOf()))
-    }
+    private val bookMarkListLiveData: MutableLiveData<MutableSet<Long>> = MutableLiveData(Hawk.get(BOOKMARK_LIST, mutableSetOf()))
+
+    private val displayBookmarkOnly: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val albumModelLiveData: LiveData<List<AlbumModel>> by lazy {
-        albumResponseLiveData.combine(bookMarkListLiveData) { albumList, bookmarks ->
-            albumList?.results?.let { album ->
+        albumResponseLiveData.combine(bookMarkListLiveData, displayBookmarkOnly) { albumList, bookmarks, bookmarkOnly ->
+            val list: List<AlbumsResponse.Result>? = if (bookmarkOnly == true) {
+                albumList?.results?.filter {
+                    bookmarks?.contains(it.collectionId) ?: false
+                }
+            } else {
+                albumList?.results
+            }
+            list?.let { album ->
                 List(album.size) {
                     AlbumModel(
                         bookmarks?.contains(album[it].collectionId) ?: false,
@@ -53,6 +58,11 @@ class MainViewModel : ViewModel() {
         }
         Hawk.put(BOOKMARK_LIST, bookmarkList)
         bookMarkListLiveData.postValue(bookmarkList)
+    }
+
+    fun onBookMarkListClicked(): Boolean {
+        displayBookmarkOnly.value = displayBookmarkOnly.value?.not()
+        return displayBookmarkOnly.value == true
     }
 
 }

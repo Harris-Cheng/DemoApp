@@ -3,16 +3,20 @@ package com.example.demoapp.utils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
-fun <A, B, R> LiveData<A>.combine(
-    liveData: LiveData<B>,
-    block: (A?, B?) -> R
+fun <A, B, C, R> LiveData<A>.combine(
+    liveDataB: LiveData<B>,
+    liveDataC: LiveData<C>,
+    block: (A?, B?, C?) -> R
 ): LiveData<R> {
     return MediatorLiveData<R>().apply {
         addSource(this@combine) {
-            value = block(this@combine.value, liveData.value)
+            value = block(this@combine.value, liveDataB.value, liveDataC.value)
         }
-        addSource(liveData) {
-            value = block(this@combine.value, liveData.value)
+        addSource(liveDataB) {
+            value = block(this@combine.value, liveDataB.value, liveDataC.value)
+        }
+        addSource(liveDataC) {
+            value = block(this@combine.value, liveDataB.value, liveDataC.value)
         }
     }
 }
