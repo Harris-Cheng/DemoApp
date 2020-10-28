@@ -23,7 +23,7 @@ class MainViewModel : ViewModel() {
         MutableLiveData(Hawk.get(BOOKMARK_LIST, mutableSetOf()))
     }
 
-    val albumModelLiveData: LiveData<List<AlbumModel>?> by lazy {
+    val albumModelLiveData: LiveData<List<AlbumModel>> by lazy {
         albumResponseLiveData.combine(bookMarkListLiveData) { albumList, bookmarks ->
             albumList?.results?.let { album ->
                 List(album.size) {
@@ -32,7 +32,7 @@ class MainViewModel : ViewModel() {
                         album[it]
                     )
                 }
-            }
+            } ?: listOf()
         }
     }
 

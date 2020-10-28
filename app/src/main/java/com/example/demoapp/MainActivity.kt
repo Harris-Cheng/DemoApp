@@ -17,8 +17,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setupAppBar()
         setupUi()
         setupViewModel()
+    }
+
+    private fun setupAppBar() {
+
     }
 
     private fun setupUi() {
@@ -39,12 +44,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.requestAlbums()
 
         mainViewModel.albumModelLiveData.observe(this, {
-            it?.run {
-                adapter.submitList(this)
-            } ?: run {
-                // error
-                Toast.makeText(this@MainActivity, "Cannot fetch album list", Toast.LENGTH_SHORT).show()
-            }
+            adapter.submitList(it)
         })
     }
 }
